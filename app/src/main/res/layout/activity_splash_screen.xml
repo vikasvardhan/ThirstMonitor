@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Water Tracker"
+        android:text="Thirst Monitor"
         android:textSize="30sp"
         android:textStyle="bold"
         android:shadowColor="@color/colorPrimaryDark"
