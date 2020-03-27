@@ -1,2 +1,2 @@
 rootProject.name='ThirstMonitor'
-include ':app'
+include ':app', ':alobar-preference'
