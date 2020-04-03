@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.thirstmonitor.LoginRegistration.LoginRegistrationActivity;
 import com.example.thirstmonitor.MainWindow.MainActivity;
 
 import static java.lang.Thread.sleep;
@@ -19,7 +20,7 @@ public class SplashScreen extends Activity {
 
                 try {
                     sleep(3000);
-                    Intent splashIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent splashIntent = new Intent(getApplicationContext(), LoginRegistrationActivity.class);
                     startActivity(splashIntent);
                     finish();
                 } catch (InterruptedException e) {
