@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by Abeer on 5/2/2017.
- */
-
 public class PrefsHelper {
 
 

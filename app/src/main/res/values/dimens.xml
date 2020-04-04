@@ -7,5 +7,7 @@
     <dimen name="padding_main">7dp</dimen>
     <dimen name="margin_main_add_drink_button">30dp</dimen>
     <dimen name="text_main">20sp</dimen>
-
+    <dimen name="headerTextSize">25sp</dimen>
+    <dimen name="newsMoreTextSize">12sp</dimen>
+    <dimen name="loginViewsMargin">20dp</dimen>
 </resources>

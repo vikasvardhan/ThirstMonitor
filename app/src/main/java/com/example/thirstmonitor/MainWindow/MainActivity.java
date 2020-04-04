@@ -52,7 +52,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
       }
 
     private void checkAppFirstTimeRun() {
-
         if (PrefsHelper.getFirstTimeRunPrefs(context)) {
             db.createDateLog(0,PrefsHelper.getWaterNeedPrefs(context),
                     DateHandler.getCurrentDate());
