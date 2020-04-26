@@ -185,4 +185,16 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
         regVf.showPrevious();
     }
+
+    public void resView(View v){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
+        }
+        regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
+        regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+        regVf.showNext();
+    }
 }

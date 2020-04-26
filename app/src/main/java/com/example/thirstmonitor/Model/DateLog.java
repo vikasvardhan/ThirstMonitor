@@ -1,8 +1,6 @@
 package com.example.thirstmonitor.Model;
 
-/**
- * Created by Abeer on 3/22/2017.
- */
+
 
 public class DateLog  {
 

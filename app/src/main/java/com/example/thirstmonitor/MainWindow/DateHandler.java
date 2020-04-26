@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Abeer on 4/12/2017.
- */
 
 public class DateHandler {
     public static String getCurrentDate(){
