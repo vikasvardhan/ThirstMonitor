@@ -12,8 +12,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,6 +42,20 @@ public class LoginRegistrationActivity extends AppCompatActivity {
     TextInputLayout regUnameTxt;
     TextInputLayout regPwdTxt;
     TextInputLayout regCnfTxt;
+
+    //ResetPassword
+    EditText resetCode;
+    EditText resetUser;
+    EditText resetPwd;
+    EditText resetCnfPwd;
+
+
+    TextInputLayout resetCodeTxt;
+    TextInputLayout resetUserTxt;
+    TextInputLayout resetPwdTxt;
+    TextInputLayout resetCnfTxt;
+
+    private String resetCodeStatic = "123456";
 
     private DrinkDataSource db;
 
@@ -83,6 +95,19 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         regPwdTxt = (TextInputLayout) findViewById(R.id.register_pwd_lbl);
         regCnfTxt = (TextInputLayout) findViewById(R.id.register_cnf_pwd_lbl);
 
+        //Reset Password
+        //Input Fields
+        resetCode = (EditText) findViewById(R.id.reset_code);
+        resetUser = (EditText) findViewById(R.id.reset_user);
+        resetPwd = (EditText) findViewById(R.id.reset_newPassword);
+        resetCnfPwd = (EditText) findViewById(R.id.reset_rptPassword);
+
+        //lblFields
+        resetCodeTxt = (TextInputLayout) findViewById(R.id.reset_code_lbl);
+        resetUserTxt = (TextInputLayout) findViewById(R.id.reset_user_lbl);
+        resetPwdTxt = (TextInputLayout) findViewById(R.id.reset_newPassword_lbl);
+        resetCnfTxt = (TextInputLayout) findViewById(R.id.reset_RptPassword_lbl);
+
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,14 +134,14 @@ public class LoginRegistrationActivity extends AppCompatActivity {
     }
 
     public void register(View v){
-        if(validate()){
+        if(validate("registration")){
             if(db.checkUser(regUName.getText().toString())) {
                 if(db.createUserAccount(regFullName.getText().toString(),regUName.getText().toString(),regPwd.getText().toString())){
                     Snackbar snackbar = Snackbar.make(v, "User created successfully", 2000);
                     snackbar.show();
                     regVf.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
                     regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
-                    regVf.showPrevious();
+                    regVf.setDisplayedChild(0);
                     PrefsHelper.setFirstTimeRunPrefs(getApplicationContext(),true);
                 }
             }else{
@@ -126,44 +151,96 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validate(){
+    public void resetNext(View v){
+        if(!db.checkUser(resetUser.getText().toString())){
+            findViewById(R.id.resetPasswordLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.resetUserLayout).setVisibility(View.GONE);
+        }
+        else{
+            Snackbar snackbar = Snackbar.make(v, "User does not exist", 2000);
+            snackbar.show();
+        }
+    }
+
+    public void resetPassword(View v){
+        if(validate("reset")){
+            if(db.resetPassword(resetPwd.getText().toString(),resetUser.getText().toString())){
+                Snackbar snackbar = Snackbar.make(v, "Password has been Reset successfully", 2000);
+                snackbar.show();
+                regVf.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
+                regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
+                regVf.setDisplayedChild(0);
+            }
+            else{
+                Snackbar snackbar = Snackbar.make(v, "Reset Password Failed", 2000);
+                snackbar.show();
+            }
+        }
+    }
+
+    private boolean validate(String type){
         boolean valid = true;
-        if(regFullName.getText().toString().length() == 0){
-            valid = false;
-            regFullNameTxt.setError("\u2022 Full Name of the User is Required");
+        if(type == "reset"){
+            if(resetCode.getText().toString().length() == 0){
+                valid = false;
+                resetCodeTxt.setError("\u2022 Reset Code is Required");
+            } else if(!resetCode.getText().toString().equals(resetCodeStatic)){
+                valid = false;
+                resetCodeTxt.setError("\u2022 Enter a valid Reset Code");
+            }
+            if (resetPwd.getText().toString().length() == 0) {
+                valid = false;
+                resetPwdTxt.setError("\u2022 Password is Required");
+            } else if (!resetPwd.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+                valid = false;
+                resetPwdTxt.setError("\u2022 Password must contain atleast 1 lowercase character");
+                resetPwdTxt.setError("\u2022 Password must contain atleast 1 uppercase character");
+                resetPwdTxt.setError("\u2022 Password must contain atleast 1 special character");
+                resetPwdTxt.setError("\u2022 Password must contain atleast 1 numeric character");
+                resetPwdTxt.setError("\u2022 Password must contain atleast 8 characters in length");
+            }
+            if (resetCnfPwd.getText().toString().length() == 0) {
+                valid = false;
+                resetCnfTxt.setError("\u2022 Confirm Password is Required");
+            } else if (!resetCnfPwd.getText().toString().equals(resetPwd.getText().toString())) {
+                valid = false;
+                resetCnfPwd.setError("\u2022 Confirm Password must match Password");
+            }
         }
-        else if(!regFullName.getText().toString().matches("^[a-zA-Z ]*$")){
-            valid = false;
-            regFullNameTxt.setError("\u2022 Name must contain only alphabets");
-        }
-        if(regUName.getText().toString().length() == 0){
-            valid = false;
-            regUnameTxt.setError("\u2022 Username is Required");
-        }
-        else if(!regUName.getText().toString().matches("^[a-z0-9A-Z]{6,15}$")){
-            valid = false;
-            regUnameTxt.setError("\u2022 User name must be alpha numeric");
-            regUnameTxt.setError("\u2022 User name must be of range from 6 to 15 characters");
-        }
-        if(regPwd.getText().toString().length() == 0){
-            valid = false;
-            regPwdTxt.setError("\u2022 Password is Required");
-        }
-        else if(!regPwd.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")){
-            valid = false;
-            regPwdTxt.setError("\u2022 Password must contain atleast 1 lowercase character");
-            regPwdTxt.setError("\u2022 Password must contain atleast 1 uppercase character");
-            regPwdTxt.setError("\u2022 Password must contain atleast 1 special character");
-            regPwdTxt.setError("\u2022 Password must contain atleast 1 numeric character");
-            regPwdTxt.setError("\u2022 Password must contain atleast 8 characters in length");
-        }
-        if(regCnfPwd.getText().toString().length() == 0){
-            valid = false;
-            regCnfTxt.setError("\u2022 Confirm Password is Required");
-        }
-        else if(!regCnfPwd.getText().toString().equals(regPwd.getText().toString())){
-            valid = false;
-            regCnfTxt.setError("\u2022 Confirm Password must match Password");
+        else {
+            if (regFullName.getText().toString().length() == 0) {
+                valid = false;
+                regFullNameTxt.setError("\u2022 Full Name of the User is Required");
+            } else if (!regFullName.getText().toString().matches("^[a-zA-Z ]*$")) {
+                valid = false;
+                regFullNameTxt.setError("\u2022 Name must contain only alphabets");
+            }
+            if (regUName.getText().toString().length() == 0) {
+                valid = false;
+                regUnameTxt.setError("\u2022 Username is Required");
+            } else if (!regUName.getText().toString().matches("^[a-z0-9A-Z]{6,15}$")) {
+                valid = false;
+                regUnameTxt.setError("\u2022 User name must be alpha numeric");
+                regUnameTxt.setError("\u2022 User name must be of range from 6 to 15 characters");
+            }
+            if (regPwd.getText().toString().length() == 0) {
+                valid = false;
+                regPwdTxt.setError("\u2022 Password is Required");
+            } else if (!regPwd.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+                valid = false;
+                regPwdTxt.setError("\u2022 Password must contain atleast 1 lowercase character");
+                regPwdTxt.setError("\u2022 Password must contain atleast 1 uppercase character");
+                regPwdTxt.setError("\u2022 Password must contain atleast 1 special character");
+                regPwdTxt.setError("\u2022 Password must contain atleast 1 numeric character");
+                regPwdTxt.setError("\u2022 Password must contain atleast 8 characters in length");
+            }
+            if (regCnfPwd.getText().toString().length() == 0) {
+                valid = false;
+                regCnfTxt.setError("\u2022 Confirm Password is Required");
+            } else if (!regCnfPwd.getText().toString().equals(regPwd.getText().toString())) {
+                valid = false;
+                regCnfTxt.setError("\u2022 Confirm Password must match Password");
+            }
         }
         return valid;
     }
@@ -176,14 +253,14 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         }
         regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
         regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
-        regVf.showNext();
+        regVf.setDisplayedChild(1);
     }
 
     public void prevView(View v) {
 
         regVf.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
         regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
-        regVf.showPrevious();
+        regVf.setDisplayedChild(0);
     }
 
     public void resView(View v){
@@ -195,6 +272,8 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         }
         regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
         regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
-        regVf.showNext();
+        findViewById(R.id.resetUserLayout).setVisibility(View.VISIBLE);
+        findViewById(R.id.resetPasswordLayout).setVisibility(View.GONE);
+        regVf.setDisplayedChild(2);
     }
 }

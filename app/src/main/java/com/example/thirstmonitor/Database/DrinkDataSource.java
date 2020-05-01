@@ -63,15 +63,24 @@ public class DrinkDataSource {
         return valid;
     }
 
-    public boolean checkUser(String userName){
+    public boolean checkUser(String userName) {
 
         Boolean valid = true;
         Cursor cursor = database.query("userAccount", allUserColumns, DrinkDbHelper.COLUMN_USER_NAME + " = '" + userName + "'", null, null, null, null);
-        if(cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             valid = false;
         }
         cursor.close();
         return valid;
+    }
+
+    public boolean resetPassword(String password, String userName) {
+        ContentValues cv = new ContentValues();
+        cv.put(DrinkDbHelper.COLUMN_USER_PASSWORD, password);
+        long ins = database.update("userAccount", cv, DrinkDbHelper.COLUMN_USER_NAME + " = '" + userName + "'", null);
+        if (ins == -1) return false;
+        else
+            return true;
     }
 
     public DateLog createDateLog(int amount, int n, String d) {
@@ -418,8 +427,8 @@ public class DrinkDataSource {
             date = cursor.getString(cursor.getColumnIndex(DrinkDbHelper.COLUMN_DATE));
 
         }
-        if(date == null)
-            date = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(new Date());
+        if (date == null)
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         cursor.close();
         return date;
     }
