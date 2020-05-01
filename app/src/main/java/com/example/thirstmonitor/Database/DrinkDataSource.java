@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.thirstmonitor.MainWindow.DateHandler;
 import com.example.thirstmonitor.Model.DateLog;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class DrinkDataSource {
     private SQLiteDatabase database;
-    private DrinkDbHelper dbHelper;
+    private SQLiteOpenHelper dbHelper;
 
     private String[] allDateColumns = {DrinkDbHelper.COLUMN_ID,
             DrinkDbHelper.COLUMN_WATER_NEED, DrinkDbHelper.COLUMN_WATER_DRUNK, DrinkDbHelper.COLUMN_DATE};

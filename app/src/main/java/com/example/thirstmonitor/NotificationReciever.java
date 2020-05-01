@@ -29,7 +29,7 @@ public class NotificationReciever extends BroadcastReceiver {
     private  Notification.Builder setupNotification(Context context) {
       //  Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.drop_notification_icon);
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setSmallIcon( R.drawable.drop_notification_icon).setContentTitle("Water Tracker")
+        builder.setSmallIcon( R.drawable.drop_notification_icon).setContentTitle("Thirst Monitor")
                 .setContentText("It is time to drink water")
                 .setContentInfo("add a drink!").setAutoCancel(true);
 

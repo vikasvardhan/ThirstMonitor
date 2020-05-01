@@ -52,9 +52,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
       }
 
     private void checkAppFirstTimeRun() {
+        db.createDateLog(0,PrefsHelper.getWaterNeedPrefs(context),
+                DateHandler.getCurrentDate());
         if (PrefsHelper.getFirstTimeRunPrefs(context)) {
-            db.createDateLog(0,PrefsHelper.getWaterNeedPrefs(context),
-                    DateHandler.getCurrentDate());
          //   AlarmHelper.setDBAlarm(context);
             startActivityForResult(new Intent(getBaseContext(), SettingsActivity.class),0);
             PrefsHelper.setFirstTimeRunPrefs(context,false);

@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Notifications.NotificationReciever" />
+        <receiver android:name=".NotificationReciever" />
         <receiver android:name=".BroadcastReceivers.DateLogBroadcastReceiver" />
         <receiver android:name=".BroadcastReceivers.StopNotificationBroadcastReceiver" />
 
