@@ -1,8 +1,5 @@
 package com.example.thirstmonitor.Settings;
 
-/**
- * Created by Abeer on 4/7/2017.
- */
 
 public class PreferenceKey {
     public final static String PREF_START_TIME = "key_from_time";

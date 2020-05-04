@@ -17,10 +17,6 @@ import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
 
-/**
- * Created by Abeer on 5/2/2017.
- */
-
 public class AlarmHelper {
 
 

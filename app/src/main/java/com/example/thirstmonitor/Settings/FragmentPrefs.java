@@ -17,11 +17,6 @@ import com.example.thirstmonitor.R;
 import java.util.Calendar;
 
 
-
-/**
- * Created by Abeer on 3/28/2017.
- */
-
 public class FragmentPrefs extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -97,13 +92,12 @@ public class FragmentPrefs extends PreferenceFragment
         if(activity!=null) {
             mActivity=(SettingsActivity)activity;
         }
-
     }
 
     private void initSummaries() {
-        boolean isNotifEnabled = getPreferenceManager().getSharedPreferences().getBoolean(PreferenceKey.PREF_IS_ENABLED, false);
-        boolean isSoundEnabled = getPreferenceManager().getSharedPreferences().getBoolean(PreferenceKey.PREF_SOUND, false);
-        int intervalNum = getPreferenceManager().getSharedPreferences().getInt(PreferenceKey.PREF_INTERVAL,2);
+        boolean isNotifEnabled = getPreferenceManager().getSharedPreferences().getBoolean(PreferenceKey.PREF_IS_ENABLED, true);
+        boolean isSoundEnabled = getPreferenceManager().getSharedPreferences().getBoolean(PreferenceKey.PREF_SOUND, true);
+        int intervalNum = getPreferenceManager().getSharedPreferences().getInt(PreferenceKey.PREF_INTERVAL,1);
         int weight = getPreferenceManager().getSharedPreferences().getInt(PreferenceKey.PREF_WEIGHT_NUMBER, 0);
         boolean training= getPreferenceManager().getSharedPreferences().getBoolean(PreferenceKey.PREF_TRAINING,false);
         int water_reco= getPreferenceManager().getSharedPreferences().getInt(PreferenceKey.PREF_WATER_NEED,0);
@@ -147,13 +141,10 @@ public class FragmentPrefs extends PreferenceFragment
     TimePickerDialog.OnTimeSetListener timeTo = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
             toC.set(Calendar.HOUR_OF_DAY,hourOfDay);
             toC.set(Calendar.MINUTE,minute);
             toTimePref.setSummary(String.valueOf(hourOfDay)+":"+ String.valueOf(minute));
             setTimePref(PreferenceKey.TO_KEY, String.valueOf(hourOfDay)+":"+ String.valueOf(minute));
-
-
         }
 
     };
@@ -162,13 +153,10 @@ public class FragmentPrefs extends PreferenceFragment
         if (b)
             return "ON";
         return "OFF";
-
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-
     }
 
     @Override
@@ -292,10 +280,6 @@ public class FragmentPrefs extends PreferenceFragment
             waterNeed= waterNeed+300;
 
         return (int)waterNeed;
-
-
-
-
     }
 
 

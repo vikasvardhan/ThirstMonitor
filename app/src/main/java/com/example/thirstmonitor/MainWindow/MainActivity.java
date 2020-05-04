@@ -1,6 +1,8 @@
 package com.example.thirstmonitor.MainWindow;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +17,15 @@ import android.widget.TextView;
 import com.example.thirstmonitor.Chart.ChartActivity;
 import com.example.thirstmonitor.Database.DrinkDataSource;
 import com.example.thirstmonitor.Dialogs.AddDialog;
+import com.example.thirstmonitor.NotificationReciever;
 import com.example.thirstmonitor.OutlinesFragments.OutlineActivity;
 import com.example.thirstmonitor.R;
 import com.example.thirstmonitor.Settings.PrefsHelper;
 import com.example.thirstmonitor.Settings.SettingsActivity;
 import com.example.thirstmonitor.WaterDrankHistory.DateLogActivity;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -112,7 +117,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     break;
                 case R.id.add_drink_button:
                   showAddDialog();
-                    break;
+                  break;
     }
 }
 
@@ -150,6 +155,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startActivity(intent4);
     }
 
+    private void sendNotification(){
+        Calendar calendar = Calendar.getInstance();
+
+        AlarmManager a  = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent nIntent = new Intent(getApplicationContext(), NotificationReciever.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, 1, nIntent, 0);
+
+        a.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis() + 10000, pIntent );
+    }
 
 
     public void  initializeViews(){
@@ -165,7 +179,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         chartButton.setOnClickListener(this);
         settingButton.setOnClickListener(this);
         outlinesButton.setOnClickListener(this);
-
         addDrinkButton.setOnClickListener(this);
     }
 

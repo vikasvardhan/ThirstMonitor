@@ -16,9 +16,6 @@ import com.example.thirstmonitor.MainWindow.MainActivity;
 import com.example.thirstmonitor.R;
 import com.example.thirstmonitor.Settings.PrefsHelper;
 
-/**
- * Created by Abeer on 4/30/2017.
- */
 
 public class OtherSizeDialog  extends Dialog implements View.OnClickListener, NumberPicker.OnValueChangeListener{
     private Context context;

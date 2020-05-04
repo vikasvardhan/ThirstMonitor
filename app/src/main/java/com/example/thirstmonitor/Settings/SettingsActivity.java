@@ -13,8 +13,6 @@ import com.example.thirstmonitor.R;
 public class SettingsActivity extends PreferenceActivity {
 
     static Toolbar bar ;
-
-
             @Override
             protected void onCreate(final Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);

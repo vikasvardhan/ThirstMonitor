@@ -15,10 +15,6 @@ import com.example.thirstmonitor.Settings.PrefsHelper;
 import java.util.Date;
 
 
-/**
- * Created by Abeer on 3/29/2017.
- */
-
 public class DateLogBroadcastReceiver extends BroadcastReceiver {
 
     private DrinkDataSource db;
@@ -37,8 +33,6 @@ public class DateLogBroadcastReceiver extends BroadcastReceiver {
                     AlarmHelper.setCancelNotificationAlarm(context);}
 
     }
-
-
 
     private void insertDateLog() {
 

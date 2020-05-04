@@ -9,9 +9,6 @@ import android.widget.RemoteViews;
 
 import com.example.thirstmonitor.R;
 
-/**
- * Created by Abeer on 7/17/2017.
- */
 
 public class WidgetProvider  extends AppWidgetProvider {
 

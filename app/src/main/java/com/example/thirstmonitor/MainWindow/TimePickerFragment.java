@@ -9,9 +9,6 @@ import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
 
-/**
- * Created by f on 2017-03-31.
- */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     OnTimePickedListener mCallback;
     Integer mLayoutId = null;
