@@ -37,7 +37,7 @@ public class DrinkDbHelper  extends SQLiteAssetHelper {
             + " (" + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_WATER_NEED + " integer, "
             + COLUMN_WATER_DRUNK + " integer, "
-            + COLUMN_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP " +
+            + COLUMN_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
             ");";
 
     private static final String CREATE_TIME_TABLE = "create table " +TIME_TABLE_NAME

@@ -16,8 +16,6 @@ import com.example.thirstmonitor.Settings.PreferenceKey;
 
 public class NotificationReciever extends BroadcastReceiver {
 
-    String CHANNEL_ID = "processing_test.notifications";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent repeatingIntent = new Intent(context, MainActivity.class);
@@ -46,6 +44,7 @@ public class NotificationReciever extends BroadcastReceiver {
         builder.setSmallIcon( R.drawable.drop_notification_icon).setContentTitle("Thirst Monitor")
                 .setContentText("It is time to drink water")
                 .setContentInfo("add a drink!").setAutoCancel(true);
+
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean soundEnable= prefs.getBoolean(PreferenceKey.PREF_SOUND,false);
